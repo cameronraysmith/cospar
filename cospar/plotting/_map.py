@@ -97,7 +97,6 @@ def fate_coupling(
         **kwargs,
     )
 
-    plt.tight_layout()
     if title is None:
         ax.set_title(f"source: {source}")
     else:
@@ -105,6 +104,7 @@ def fate_coupling(
 
     if figure_index != "":
         figure_index == f"_{figure_index}"
+    plt.tight_layout()
     plt.savefig(
         os.path.join(
             figure_path,
