@@ -33,13 +33,14 @@ logfile = ""
 
 import warnings
 
-from cycler import cycler
-from matplotlib import cbook, cm, colors, rcParams
+# from cycler import cycler
+# from matplotlib import cm, colors, rcParams
+from matplotlib import rcParams
 
 # from cospar import help_functions as hf
 # from . import help_functions as hf
 
-warnings.filterwarnings("ignore", category=cbook.mplDeprecation)
+# warnings.filterwarnings("ignore", category=cbook.mplDeprecation)
 
 
 def set_rcParams_cospar(fontsize=12, color_map=None, frameon=None):
