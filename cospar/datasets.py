@@ -7,7 +7,6 @@ from . import logging as logg
 from . import settings
 
 url_prefix_0 = "https://kleintools.hms.harvard.edu/tools/downloads/cospar"
-url_prefix_1 = "https://wangshouwen.lab.westlake.edu.cn/app/filebrowser/api/public/dl"
 
 
 def synthetic_bifurcation(data_des="bifur"):
@@ -123,10 +122,28 @@ def DARLIN_in_vivo_hematopoiesis(data_des="DARLIN"):
 
     data_path = settings.data_path
     figure_path = settings.figure_path
-    data_name = "QLkWJaIL/shared_readonly/shared_with_public/tissue_adata_refined_20221106_joint.h5ad"
-    return load_data_core(
-        data_path, figure_path, data_name, data_des, url_prefix=url_prefix_1
-    )
+    data_name = "tissue_adata_refined_20221106_joint.h5ad"
+
+    path = os.path.join(data_path, data_name)
+    path = Path(path)
+    figure_path = Path(figure_path)
+
+    if not path.parent.is_dir():
+        logg.info(f"creating directory {path.parent} for saving data")
+        path.parent.mkdir(parents=True)
+
+    if not figure_path.is_dir():
+        logg.info(f"creating directory {figure_path} for saving figures")
+        figure_path.mkdir(parents=True)
+
+    if os.path.exists(f"{data_path}/{data_name}"):
+        adata = read(f"{data_path}/{data_name}")
+    else:
+        url = "https://wangshouwen.lab.westlake.edu.cn/app/filebrowser/api/public/dl/-hBYklZc"
+        _download(url, path)
+        adata = read(f"{data_path}/{data_name}")
+
+    return adata
 
 
 def reprogramming_Day0_3_28(data_des="Reprog_128"):
