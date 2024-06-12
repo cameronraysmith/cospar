@@ -1,12 +1,9 @@
-import os
-from pathlib import Path, PurePath
+from pathlib import Path
 
 from scanpy import read
 
 from . import logging as logg
 from . import settings
-
-url_prefix_0 = "https://kleintools.hms.harvard.edu/tools/downloads/cospar"
 
 
 def synthetic_bifurcation(data_des="bifur"):
@@ -25,11 +22,8 @@ def synthetic_bifurcation(data_des="bifur"):
         A key to label this dataset.
     """
 
-    data_path = settings.data_path
-    figure_path = settings.figure_path
-    # data_name='bifurcation_static_BC_adata_preprocessed.h5ad'
     data_name = "bifur_adata_preprocessed.h5ad"
-    return load_data_core(data_path, figure_path, data_name, data_des)
+    return load_data_core(data_name, data_des)
 
 
 def raw_data_for_import_exercise():
@@ -45,7 +39,7 @@ def raw_data_for_import_exercise():
 
     import zipfile
 
-    with zipfile.ZipFile(f"test_data.zip", "r") as zip_ref:
+    with zipfile.ZipFile("test_data.zip", "r") as zip_ref:
         zip_ref.extractall()
 
 
@@ -65,10 +59,8 @@ def raw_data_for_import_exercise():
 #         A key to label this dataset.
 #     """
 
-#     data_path=settings.data_path
-#     figure_path=settings.figure_path
 #     data_name='bifurcation_dynamic_BC_adata_preprocessed.h5ad'
-#     return load_data_core(data_path,figure_path,data_name,data_des)
+#     return load_data_core(data_name, data_des)
 
 
 def reprogramming(data_des="CellTagging"):
@@ -100,10 +92,8 @@ def reprogramming(data_des="CellTagging"):
         A key to label this dataset.
     """
 
-    data_path = settings.data_path
-    figure_path = settings.figure_path
     data_name = "CellTagging_adata_preprocessed.h5ad"
-    return load_data_core(data_path, figure_path, data_name, data_des)
+    return load_data_core(data_name, data_des)
 
 
 def DARLIN_in_vivo_hematopoiesis(data_des="DARLIN"):
@@ -120,30 +110,8 @@ def DARLIN_in_vivo_hematopoiesis(data_des="DARLIN"):
         A key to label this dataset.
     """
 
-    data_path = settings.data_path
-    figure_path = settings.figure_path
     data_name = "tissue_adata_refined_20221106_joint.h5ad"
-
-    path = os.path.join(data_path, data_name)
-    path = Path(path)
-    figure_path = Path(figure_path)
-
-    if not path.parent.is_dir():
-        logg.info(f"creating directory {path.parent} for saving data")
-        path.parent.mkdir(parents=True)
-
-    if not figure_path.is_dir():
-        logg.info(f"creating directory {figure_path} for saving figures")
-        figure_path.mkdir(parents=True)
-
-    if os.path.exists(f"{data_path}/{data_name}"):
-        adata = read(f"{data_path}/{data_name}")
-    else:
-        url = "https://wangshouwen.lab.westlake.edu.cn/app/filebrowser/api/public/dl/rLFbKIvS/tissue_adata_refined_20221106_joint.h5ad"
-        _download(url, path)
-        adata = read(f"{data_path}/{data_name}")
-
-    return adata
+    return load_data_core(data_name, data_des)
 
 
 def reprogramming_Day0_3_28(data_des="Reprog_128"):
@@ -165,10 +133,8 @@ def reprogramming_Day0_3_28(data_des="Reprog_128"):
         A key to label this dataset.
     """
 
-    data_path = settings.data_path
-    figure_path = settings.figure_path
     data_name = "Reprog_128_D0D3_adata_preprocessed.h5ad"
-    return load_data_core(data_path, figure_path, data_name, data_des)
+    return load_data_core(data_name, data_des)
 
 
 # def reprogramming_static_BC(data_des='CellTagging'):
@@ -234,10 +200,8 @@ def lung(data_des="Lung"):
         A key to label this dataset.
     """
 
-    data_path = settings.data_path
-    figure_path = settings.figure_path
     data_name = "Lung_pos17_21_D27_adata_preprocessed.h5ad"
-    return load_data_core(data_path, figure_path, data_name, data_des)
+    return load_data_core(data_name, data_des)
 
 
 def hematopoiesis(data_des="LARRY"):
@@ -256,10 +220,8 @@ def hematopoiesis(data_des="LARRY"):
         A key to label this dataset.
     """
 
-    data_path = settings.data_path
-    figure_path = settings.figure_path
     data_name = "LARRY_adata_preprocessed.h5ad"
-    return load_data_core(data_path, figure_path, data_name, data_des)
+    return load_data_core(data_name, data_des)
 
 
 def hematopoiesis_130K(data_des="LARRY"):
@@ -277,10 +239,8 @@ def hematopoiesis_130K(data_des="LARRY"):
         A key to label this dataset.
     """
 
-    data_path = settings.data_path
-    figure_path = settings.figure_path
     data_name = "Complete_LARRY_dataset_adata_preprocessed.h5ad"
-    return load_data_core(data_path, figure_path, data_name, data_des)
+    return load_data_core(data_name, data_des)
 
 
 def hematopoiesis_Gata1_states(data_des="LARRY_Gata1_lineage"):
@@ -297,10 +257,8 @@ def hematopoiesis_Gata1_states(data_des="LARRY_Gata1_lineage"):
         A key to label this dataset.
     """
 
-    data_path = settings.data_path
-    figure_path = settings.figure_path
     data_name = "LARRY_Gata1_lineage_adata_preprocessed.h5ad"
-    return load_data_core(data_path, figure_path, data_name, data_des)
+    return load_data_core(data_name, data_des)
 
 
 def hematopoiesis_subsampled(data_des="LARRY_sp500_ranking1"):
@@ -320,31 +278,25 @@ def hematopoiesis_subsampled(data_des="LARRY_sp500_ranking1"):
         A key to label this dataset.
     """
 
+    data_name = "LARRY_sp500_ranking1_adata_preprocessed.h5ad"
+    return load_data_core(data_name, data_des)
+
+
+def load_data_core(data_name, data_des, backup_exists=True):
     data_path = settings.data_path
     figure_path = settings.figure_path
-    data_name = "LARRY_sp500_ranking1_adata_preprocessed.h5ad"
-    return load_data_core(data_path, figure_path, data_name, data_des)
 
-
-def load_data_core(
-    data_path, figure_path, data_name, data_des, url_prefix=url_prefix_0
-):
-    url = f"{url_prefix}/{data_name}"
-    path = os.path.join(data_path, data_name)
-    path = Path(path)
+    path = Path(data_path) / data_name
     figure_path = Path(figure_path)
-
-    if not path.parent.is_dir():
-        logg.info(f"creating directory {path.parent} for saving data")
-        path.parent.mkdir(parents=True)
 
     if not figure_path.is_dir():
         logg.info(f"creating directory {figure_path} for saving figures")
         figure_path.mkdir(parents=True)
+    
+    backup_url_prefix = "https://wangshouwen.lab.westlake.edu.cn/app/filebrowser/api/public/dl/rLFbKIvS/"
+    backup_url = f"{backup_url_prefix}{data_name}" if backup_exists else None
 
-    # print(url)
-    status = _check_datafile_present_and_download(path, backup_url=url)
-    if status:
+    if _check_datafile_present_and_download(path, backup_url):
         adata = read(path)
         # adata.uns['data_path']=[str(data_path)]
         # adata.uns['figure_path']=[str(figure_path)]
@@ -355,17 +307,18 @@ def load_data_core(
         return None
 
 
-def _check_datafile_present_and_download(path, backup_url=None):
+def _check_datafile_present_and_download(path, backup_url):
     """Check whether the file is present, otherwise download."""
     path = Path(path)
+
     if path.is_file():
         return True
-    if backup_url is None:
+
+    if not backup_url:
         return False
-    logg.info(
-        f"try downloading from url\n{backup_url}\n"
-        "... this may take a while but only happens once"
-    )
+
+    logg.info(f"try downloading from url\n{backup_url}\n" "... this may take a while but only happens once")
+
     if not path.parent.is_dir():
         logg.info(f"creating directory {path.parent} for saving data")
         path.parent.mkdir(parents=True)
@@ -389,13 +342,16 @@ def _download(url: str, path: Path):
     try:
         with urlopen(Request(url, headers={"User-agent": "scanpy-user"})) as resp:
             total = resp.info().get("content-length", None)
-            with tqdm(
-                unit="B",
-                unit_scale=True,
-                miniters=1,
-                unit_divisor=1024,
-                total=total if total is None else int(total),
-            ) as t, path.open("wb") as f:
+            with (
+                tqdm(
+                    unit="B",
+                    unit_scale=True,
+                    miniters=1,
+                    unit_divisor=1024,
+                    total=total if total is None else int(total),
+                ) as t,
+                path.open("wb") as f,
+            ):
                 block = resp.read(blocksize)
                 while block:
                     f.write(block)
