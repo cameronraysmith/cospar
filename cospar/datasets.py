@@ -292,7 +292,7 @@ def load_data_core(data_name, data_des, backup_exists=True):
     if not figure_path.is_dir():
         logg.info(f"creating directory {figure_path} for saving figures")
         figure_path.mkdir(parents=True)
-    
+
     backup_url_prefix = "https://wangshouwen.lab.westlake.edu.cn/app/filebrowser/api/public/dl/rLFbKIvS/"
     backup_url = f"{backup_url_prefix}{data_name}" if backup_exists else None
 
@@ -317,7 +317,10 @@ def _check_datafile_present_and_download(path, backup_url):
     if not backup_url:
         return False
 
-    logg.info(f"try downloading from url\n{backup_url}\n" "... this may take a while but only happens once")
+    logg.info(
+        f"try downloading from url\n{backup_url}\n"
+        "... this may take a while but only happens once"
+    )
 
     if not path.parent.is_dir():
         logg.info(f"creating directory {path.parent} for saving data")
@@ -342,16 +345,13 @@ def _download(url: str, path: Path):
     try:
         with urlopen(Request(url, headers={"User-agent": "scanpy-user"})) as resp:
             total = resp.info().get("content-length", None)
-            with (
-                tqdm(
-                    unit="B",
-                    unit_scale=True,
-                    miniters=1,
-                    unit_divisor=1024,
-                    total=total if total is None else int(total),
-                ) as t,
-                path.open("wb") as f,
-            ):
+            with tqdm(
+                unit="B",
+                unit_scale=True,
+                miniters=1,
+                unit_divisor=1024,
+                total=total if total is None else int(total),
+            ) as t, path.open("wb") as f:
                 block = resp.read(blocksize)
                 while block:
                     f.write(block)
