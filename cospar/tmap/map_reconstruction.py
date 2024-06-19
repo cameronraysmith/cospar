@@ -139,20 +139,19 @@ def infer_Tmap_from_multitime_clones(
         later_time_point = later_time_point[0]
 
     if later_time_point is not None:
-        clonal_time_points = list(clonal_time_points) + [later_time_point]
-        clonal_time_points = list(set(clonal_time_points))
+        clonal_time_points_all = list(clonal_time_points) + [later_time_point]
+        clonal_time_points_all = list(set(clonal_time_points_all))
+    else:
+        clonal_time_points_all=clonal_time_points
+
 
     hf.check_input_parameters(
         adata_orig,
         later_time_point=later_time_point,
-        clonal_time_points=clonal_time_points,
+        clonal_time_points=clonal_time_points_all,
         smooth_array=smooth_array,
         save_subset=save_subset,
     )
-    # order the clonal time points
-    time_ordering = adata_orig.uns["time_ordering"]
-    sel_idx_temp = np.in1d(time_ordering, clonal_time_points)
-    clonal_time_points = time_ordering[sel_idx_temp]
 
     logg.info("------Compute the full Similarity matrix if necessary------")
     data_path = settings.data_path
@@ -184,6 +183,12 @@ def infer_Tmap_from_multitime_clones(
     # compute transition map between neighboring time points
     if later_time_point is None:
         logg.info("----Infer transition map between neighboring time points-----")
+
+        # order the clonal time points
+        # time_ordering = adata_orig.uns["time_ordering"]
+        # sel_idx_temp = np.in1d(time_ordering, clonal_time_points)
+        # clonal_time_points = time_ordering[sel_idx_temp]
+
         logg.info("Step 1: Select time points")
         adata = tmap_util.select_time_points(
             adata_orig,
@@ -215,8 +220,10 @@ def infer_Tmap_from_multitime_clones(
 
     else:
         # compute transition map between initial time points and the later time point
-        sel_id = np.nonzero(np.in1d(clonal_time_points, later_time_point))[0][0]
-        initial_time_points = clonal_time_points[:sel_id]
+        #sel_id = np.nonzero(np.in1d(clonal_time_points, later_time_point))[0][0]
+        if later_time_point in clonal_time_points:
+            clonal_time_points.remove(later_time_point)
+        initial_time_points = clonal_time_points #[:sel_id]
 
         time_info_orig = np.array(adata_orig.obs["time_info"])
         sp_idx = np.zeros(adata_orig.shape[0], dtype=bool)
@@ -254,6 +261,8 @@ def infer_Tmap_from_multitime_clones(
         intraclone_transition_map = np.zeros(
             (len(Tmap_cell_id_t1), len(Tmap_cell_id_t2))
         )
+
+
 
         logg.info(
             "------Infer transition map between initial time points and the later time one------"
