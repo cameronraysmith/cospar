@@ -19,11 +19,9 @@ setup(
         docs=[r for r in Path("docs/requirements.txt").read_text("utf-8").splitlines()],
     ),
     packages=find_packages(),  # this is better than packages=["cospar"], which only include the top level files
-    long_description_content_type="text/x-rst",
     author="Shou-Wen Wang",
     author_email="shouwen_wang@hms.harvard.edu",
     description="CoSpar: integrating state and lineage information for dynamic inference",
-    long_description=Path("pypi.rst").read_text("utf-8"),
     license="BSD",
     url="https://github.com/ShouWenWang-Lab/cospar",
     download_url="https://github.com/ShouWenWang-Lab/cospar",
