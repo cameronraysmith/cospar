@@ -9,6 +9,7 @@ on:
       - 'cospar/**'
       - 'tests/**'
       - 'poetry.lock'
+
   pull_request:
     branches:
       - master
@@ -18,9 +19,11 @@ on:
       - 'tests/**'
       - 'poetry.lock'
 
+  workflow_call:
+
 jobs:
-  pytest:
-    name: Run pytest
+  run-tests:
+    name: Run tests
     strategy:
       fail-fast: true
       matrix:
@@ -56,8 +59,8 @@ jobs:
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
 
-      - name: Install dependencies
+      - name: Install the package
         run: poetry install --no-interaction
 
-      - name: Run tests
+      - name: Run pytest
         run: poetry run pytest

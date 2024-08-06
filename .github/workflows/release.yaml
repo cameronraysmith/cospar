@@ -6,8 +6,13 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
+  run-tests:
+    name: Run tests
+    uses: ./.github/workflows/run_tests.yaml
+
   pypi-release:
     name: Publish to PyPI
+    needs: [ run-tests ]
     runs-on: ubuntu-latest
 
     steps:
