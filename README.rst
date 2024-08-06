@@ -1,7 +1,7 @@
 CoSpar - dynamic inference by integrating state and lineage information
 =======================================================================
 
-|PyPI| |PyPIDownloads| |Anaconda| |Bioconda| |Docs|
+|Python| |PyPIDownloads| |PyPI| |Conda| |Docs|
 
 .. image:: https://user-images.githubusercontent.com/4595786/104988296-b987ce00-59e5-11eb-8dbe-a463b355a9fd.png
    :width: 300px
@@ -34,6 +34,7 @@ Reference
 ---------
 `S.-W. Wang*, M. Herriges, K. Hurley, D. Kotton, A. M. Klein*, CoSpar identifies early cell fate biases from single cell transcriptomic and lineage information, Nat. Biotech. (2022) <https://www.nature.com/articles/s41587-022-01209-1>`_. [* corresponding authors]
 
+
 Support
 -------
 Feel free to submit an `issue <https://github.com/ShouWenWang-Lab/cospar/issues/new/choose>`_
@@ -41,19 +42,18 @@ or send us an `email <mailto:wangshouwen@westlake.edu.cn>`_.
 Your help to improve CoSpar is highly appreciated.
 
 
-
 .. _anndata: https://anndata.readthedocs.io
 
-.. |PyPI| image:: https://img.shields.io/pypi/v/cospar.svg
+.. |Python| image:: https://img.shields.io/pypi/pyversions/cospar
    :target: https://pypi.org/project/cospar
 
 .. |PyPIDownloads| image:: https://pepy.tech/badge/cospar
    :target: https://pepy.tech/project/cospar
 
-.. |Anaconda| image:: https://anaconda.org/bioconda/cospar/badges/version.svg
-   :target: https://anaconda.org/bioconda/cospar
+.. |PyPI| image:: https://img.shields.io/pypi/v/cospar.svg
+   :target: https://pypi.org/project/cospar
 
-.. |Bioconda| image:: https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat-square
+.. |Conda| image:: https://img.shields.io/conda/vn/bioconda/cospar
    :target: https://anaconda.org/bioconda/cospar
 
 .. |Docs| image:: https://readthedocs.org/projects/cospar/badge/?version=latest
