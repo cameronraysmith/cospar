@@ -24,7 +24,7 @@ selected_fates = [
 ]
 
 
-def config(shared_datadir):
+def config(shared_datadir="tests/data"):
     cs.settings.data_path = os.path.join(shared_datadir, "..", "output")
     cs.settings.figure_path = os.path.join(shared_datadir, "..", "output")
     cs.settings.verbosity = 0  # range: 0 (error),1 (warning),2 (info),3 (hint).
@@ -34,7 +34,7 @@ def config(shared_datadir):
     cs.hf.set_up_folders()  # setup the data_path and figure_path
 
 
-def test_load_dataset(shared_datadir):
+def test_load_dataset(shared_datadir="tests/data"):
     config(shared_datadir)
     print("-------------------------load dataset")
     # cs.datasets.hematopoiesis_subsampled()
@@ -47,7 +47,7 @@ def test_load_dataset(shared_datadir):
     # cs.datasets.reprogramming_Day0_3_28()
 
 
-def test_load_data_from_scratch(shared_datadir):
+def test_load_data_from_scratch(shared_datadir="tests/data"):
     import numpy as np
     import pandas as pd
     import scipy.io as sio
@@ -68,7 +68,7 @@ def test_load_data_from_scratch(shared_datadir):
     # cs.pl.embedding(adata_orig, color="state_info")
 
 
-def test_preprocessing(shared_datadir):
+def test_preprocessing(shared_datadir="tests/data"):
     config(shared_datadir)
     file_name = os.path.join(shared_datadir, "test_adata_preprocessed.h5ad")
     adata_orig_0 = cs.hf.read(file_name)
@@ -126,7 +126,7 @@ def test_preprocessing(shared_datadir):
     plt.close("all")
 
 
-def test_clonal_analysis(shared_datadir):
+def test_clonal_analysis(shared_datadir="tests/data"):
     config(shared_datadir)
 
     file_name = os.path.join(shared_datadir, "test_adata_preprocessed.h5ad")
@@ -158,7 +158,7 @@ def test_clonal_analysis(shared_datadir):
     plt.close("all")
 
 
-def test_Tmap_inference(shared_datadir):
+def test_Tmap_inference(shared_datadir="tests/data"):
     config(shared_datadir)
     file_name = os.path.join(shared_datadir, "test_adata_preprocessed.h5ad")
     adata_orig = cs.hf.read(file_name)
@@ -200,7 +200,7 @@ def test_Tmap_inference(shared_datadir):
     # cs.hf.save_map(adata_3)
 
 
-def test_Tmap_analysis(shared_datadir):
+def test_Tmap_analysis(shared_datadir="tests/data"):
     config(shared_datadir)
 
     load_pre_compute_map = False
